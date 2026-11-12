@@ -1,0 +1,8 @@
+Third-party components retain their original licenses.
+Qwen/Qwen3-VL-8B-Instruct-GGUF: https://huggingface.co/Qwen/Qwen3-VL-8B-Instruct-GGUF (Apache-2.0)
+Marqo/marqo-fashionSigLIP: https://huggingface.co/Marqo/marqo-fashionSigLIP (Apache-2.0)
+Tokenizer timm/ViT-B-16-SigLIP: https://huggingface.co/timm/ViT-B-16-SigLIP
+Ollama: https://github.com/ollama/ollama (MIT; bundled libraries may have additional notices).
+Python license: .ai-runtime/python/LICENSE.txt. Python packages include their original dist-info/licenses files.
+Node notices: licenses/Node.txt. Model/source notices: licenses/.
+Application source is included in tool/. Portable modifications: relative runtimes, isolated local ports, local-only queue, fresh data, public brand seeds.

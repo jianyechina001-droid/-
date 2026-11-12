@@ -1,0 +1,5 @@
+import {aiHeartbeat,claimAI,completeAI} from './ai-queue.mjs';
+export async function startAIWorker({root,bucket,ai}){let stopped=false,busy=false,lastStart=0,lastError='';
+const heartbeat=async()=>{try{await aiHeartbeat(bucket,{...ai.status(),error:ai.error||lastError})}catch(e){lastError=e.message}};
+const tick=async()=>{if(stopped||busy)return;busy=true;try{if(!ai.ready){if(Date.now()-lastStart>30000){lastStart=Date.now();await ai.start()}return}const job=await claimAI(bucket);if(job){try{await completeAI(bucket,{id:job.id,leaseId:job.leaseId,review:await ai.review(job.product,job.query)})}catch(e){lastError=e.message;await completeAI(bucket,{id:job.id,leaseId:job.leaseId,error:e.message})}}}catch(e){lastError=e.message}finally{busy=false}};
+const health=setInterval(heartbeat,10000),timer=setInterval(tick,2000);heartbeat();tick();return {stop(){stopped=true;clearInterval(health);clearInterval(timer);ai.close()},status(){return {...ai.status(),lastError}}}}
